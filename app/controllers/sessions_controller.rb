@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:session][:password])
       flash[:success] = "Добро пожаловать!"
       sign_in user
-      redirect_to user
+      redirect_back_or user
     else
       flash.now[:error] = 'Попробуйте еще раз' # Not quite right!
       render 'new'
