@@ -53,12 +53,7 @@ class UsersController < ApplicationController
     end
   # Before filters
 
-    def signed_in_user
-      unless signed_in?
-        store_location
-        redirect_to signin_url, notice: "Please sign in."
-      end
-    end
+    
   
   def store_location
     session[:return_to] = request.url if request.get?
@@ -71,6 +66,10 @@ class UsersController < ApplicationController
       
   def admin_user
     redirect_to(root_url) unless current_user.admin?
+  end
+  def show
+    @user = User.find(params[:id])
+    @microposts = @user.microposts.paginate(page: params[:page])
   end
   
   
